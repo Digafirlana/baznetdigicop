@@ -22,17 +22,17 @@ export default function Home() {
 
         <div className="flex gap-8 text-gray-500 dark:text-gray-400">
           <a href="#" className="hover:text-cyan-500 dark:hover:text-white transition-colors">
-            <FaInstagram size={24} />
+            <FaInstagram size={35} />
           </a>
           <a href="#" className="hover:text-blue-600 dark:hover:text-white transition-colors">
-            <FaFacebookF size={24} />
+            <FaFacebookF size={35} />
           </a>
           <a href="#" className="hover:text-green-500 dark:hover:text-white transition-colors">
-            <FaWhatsapp size={24} />
+            <FaWhatsapp size={35} />
           </a>
-          {/* TikTok ditambahkan di sini */}
+      
           <a href="#" className="hover:text-pink-500 dark:hover:text-white transition-colors">
-            <FaTiktok size={24} />
+            <FaTiktok size={35} />
           </a>
         </div>
       </div>

@@ -3,65 +3,468 @@
 @tailwind utilities;
 
 @layer base {
-  /* 1. Definisikan Variabel untuk Mode Terang (Default) */
+  /* ========== DESIGN TOKENS ========== */
   :root {
-    --bg-color: #f5f3ec; /* Background warna kertas/terang */
-    --text-color: #0a0a0f; /* Teks warna gelap */
-    --dot-color: rgba(10, 10, 15, 0.12); /* Dot grid warna gelap agar terlihat di bg terang */
-    --selection-bg: #22c55e;
-    --selection-text: #0a0a0f;
+    /* Warna Utama */
+    --color-ink: #0a0a0f;
+    --color-paper: #f5f3ec;
+    --color-cyan: #00c2d1;
+    --color-green: #22c55e;
+    --color-yellow: #ffd400;
+    
+    /* Mode Terang (Default) */
+    --bg-primary: var(--color-paper);
+    --text-primary: var(--color-ink);
+    --dot-opacity: 0.12;
+    
+    /* Selection */
+    --selection-bg: var(--color-green);
+    --selection-text: var(--color-ink);
+    
+    /* Focus Ring */
+    --focus-ring: var(--color-yellow);
+    
+    /* Transitions */
+    --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Spacing */
+    --grid-gap: 1.5rem;
   }
 
-  /* 2. Definisikan Variabel untuk Mode Gelap (Ketika class .dark aktif) */
   .dark {
-    --bg-color: #0a0a0f; /* Background warna gelap (Ink) */
-    --text-color: #f5f3ec; /* Teks warna terang (Paper) */
-    --dot-color: rgba(245, 243, 236, 0.12); /* Dot grid warna terang agar terlihat di bg gelap */
+    --bg-primary: var(--color-ink);
+    --text-primary: var(--color-paper);
+    --dot-opacity: 0.12;
   }
 
-  ::selection {
-    /* Mengganti background highlight text dari pink ke hijau */
-    background-color: var(--selection-bg);
-    color: var(--selection-text);
+  /* ========== BASE STYLES ========== */
+  *,
+  *::before,
+  *::after {
+    @apply border-0 m-0 p-0 box-border;
   }
 
   html {
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body {
-    /* 3. Gunakan variabel di elemen body */
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    /* Tambahkan transisi agar perpindahan mode tidak kasar */
-    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color var(--transition-base), color var(--transition-base);
+    min-height: 100vh;
   }
 
+  /* ========== SELECTION ========== */
+  ::selection {
+    background-color: var(--selection-bg);
+    color: var(--selection-text);
+  }
+
+  /* ========== FOCUS ========== */
   :focus-visible {
-    outline: 2px solid #ffd400;
+    outline: 2px solid var(--focus-ring);
     outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ========== SCROLLBAR ========== */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--text-primary) 20%, transparent);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--text-primary) 40%, transparent);
+  }
+}
+
+@layer components {
+  /* ========== PAGE WRAPPER ========== */
+  .pg-wrap { 
+    min-height: 100vh; 
+    background-color: #f5f3ec;
+    transition: background-color var(--transition-base);
+  }
+  
+  .dark .pg-wrap { 
+    background-color: #0a0a0f;
+  }
+
+  /* ========== TOPBAR ========== */
+  .pg-topbar {
+    position: sticky; 
+    top: 0; 
+    z-index: 20;
+    border-bottom: 1px solid #e4e4e7;
+    background: rgba(244, 244, 245, 0.92);
+    backdrop-filter: blur(8px);
+    padding: 10px 20px;
+    transition: all var(--transition-base);
+  }
+  
+  .dark .pg-topbar {
+    border-bottom-color: #3f3f46;
+    background: rgba(24, 24, 27, 0.92);
+  }
+
+  .pg-topbar-inner { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+  }
+
+  /* ========== SEARCH ========== */
+  .pg-search-wrap { 
+    position: relative; 
+    display: flex; 
+    align-items: center; 
+  }
+
+  .pg-search-icon { 
+    position: absolute; 
+    left: 10px; 
+    display: flex; 
+    align-items: center; 
+    pointer-events: none; 
+    color: #a1a1aa;
+    transition: color var(--transition-base);
+  }
+
+  .pg-icon { 
+    width: 16px; 
+    height: 16px; 
+  }
+
+  .pg-input {
+    width: 100%; 
+    padding: 8px 36px; 
+    border-radius: 10px;
+    border: 1px solid #d4d4d8; 
+    background: #ffffff; 
+    color: #18181b;
+    font-size: 13px; 
+    outline: none; 
+    box-sizing: border-box; 
+    transition: all var(--transition-base);
+  }
+
+  .dark .pg-input {
+    background: #27272a;
+    border-color: #3f3f46;
+    color: #f4f4f5;
+  }
+
+  .pg-input:focus { 
+    border-color: #2563eb; 
+  }
+
+  .dark .pg-input:focus { 
+    border-color: #3b82f6; 
+  }
+
+  .pg-input::placeholder {
+    color: #a1a1aa;
+  }
+
+  .dark .pg-input::placeholder {
+    color: #52525b;
+  }
+
+  .pg-clear-btn { 
+    position: absolute; 
+    right: 8px; 
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    color: #a1a1aa; 
+    display: flex; 
+    align-items: center; 
+    padding: 0;
+    transition: color var(--transition-base);
+  }
+
+  .pg-clear-btn:hover {
+    color: #18181b;
+  }
+
+  .dark .pg-clear-btn:hover {
+    color: #f4f4f5;
+  }
+
+  /* ========== FILTERS ========== */
+  .pg-filters { 
+    display: flex; 
+    gap: 8px; 
+    overflow-x: auto; 
+    scrollbar-width: none; 
+    padding-bottom: 2px; 
+  }
+
+  .pg-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pg-filter-btn {
+    flex-shrink: 0; 
+    padding: 4px 14px; 
+    border-radius: 20px; 
+    font-size: 12px; 
+    font-weight: 500;
+    cursor: pointer; 
+    border: 1px solid #d4d4d8; 
+    background: transparent; 
+    color: #71717a; 
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .dark .pg-filter-btn {
+    border-color: #3f3f46;
+    color: #71717a;
+  }
+
+  .pg-filter-btn:hover { 
+    border-color: #a1a1aa; 
+    color: #3f3f46; 
+  }
+
+  .dark .pg-filter-btn:hover {
+    border-color: #52525b;
+    color: #d4d4d8;
+  }
+
+  .pg-filter-btn.active { 
+    background: #2563eb !important; 
+    border-color: #2563eb !important; 
+    color: #ffffff !important; 
+  }
+
+  /* ========== MAIN CONTENT ========== */
+  .pg-main { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 20px; 
+  }
+
+  .pg-count { 
+    font-size: 13px; 
+    color: #a1a1aa; 
+    margin-bottom: 16px;
+    transition: color var(--transition-base);
+  }
+
+  .dark .pg-count {
+    color: #71717a;
+  }
+
+  /* ========== GRID ========== */
+  .pg-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    gap: 16px; 
+  }
+
+  /* ========== CARD ========== */
+  .pg-card {
+    border-radius: 14px; 
+    overflow: hidden; 
+    border: 1px solid #e4e4e7;
+    background: #ffffff; 
+    transition: transform 0.2s, box-shadow 0.2s, background-color var(--transition-base), border-color var(--transition-base);
+    display: flex; 
+    flex-direction: column;
+  }
+
+  .dark .pg-card {
+    background: #27272a;
+    border-color: #3f3f46;
+  }
+
+  .pg-card:hover { 
+    transform: translateY(-3px); 
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border-color: #a1a1aa;
+  }
+
+  .dark .pg-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    border-color: #52525b;
+  }
+
+  .pg-card-img {
+    height: 150px; 
+    background: #f4f4f5; 
+    display: flex; 
+    align-items: center;
+    justify-content: center; 
+    overflow: hidden; 
+    position: relative; 
+    flex-shrink: 0;
+    transition: background-color var(--transition-base);
+  }
+
+  .dark .pg-card-img {
+    background: #3f3f46;
+  }
+
+  .pg-img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+  }
+
+  .pg-img-fallback { 
+    font-size: 36px; 
+  }
+
+  /* ========== BADGE ========== */
+  .pg-badge {
+    position: absolute; 
+    top: 8px; 
+    left: 8px; 
+    padding: 3px 10px;
+    border-radius: 20px; 
+    font-size: 10px; 
+    font-weight: 600;
+    background: #eff6ff; 
+    color: #1d4ed8; 
+    border: 1px solid #bfdbfe;
+    transition: all var(--transition-base);
+  }
+
+  .dark .pg-badge {
+    background: rgba(37, 99, 235, 0.25);
+    color: #93c5fd;
+    border-color: rgba(59, 130, 246, 0.3);
+  }
+
+  /* ========== CARD BODY ========== */
+  .pg-card-body { 
+    padding: 14px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+    flex: 1; 
+  }
+
+  .pg-card-name { 
+    font-weight: 600; 
+    font-size: 14px; 
+    color: #18181b; 
+    line-height: 1.4; 
+    margin: 0;
+    transition: color var(--transition-base);
+  }
+
+  .dark .pg-card-name {
+    color: #f4f4f5;
+  }
+
+  .pg-card-note {
+    margin-top: auto; 
+    padding-top: 10px; 
+    border-top: 1px solid #f0f0f0;
+    font-size: 12px; 
+    color: #71717a; 
+    display: flex; 
+    align-items: center; 
+    gap: 6px;
+    transition: all var(--transition-base);
+  }
+
+  .dark .pg-card-note {
+    border-top-color: #3f3f46;
+    color: #a1a1aa;
+  }
+
+  /* ========== MARK ========== */
+  .pg-mark { 
+    background: #fef08a; 
+    color: inherit; 
+    border-radius: 2px; 
+    padding: 0 2px;
+    transition: background-color var(--transition-base);
+  }
+
+  .dark .pg-mark {
+    background: #854d0e;
+  }
+
+  /* ========== EMPTY STATE ========== */
+  .pg-empty { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    padding: 80px 0; 
+    gap: 12px; 
+    color: #a1a1aa; 
+    font-size: 14px;
+    transition: color var(--transition-base);
+  }
+
+  .pg-reset-btn { 
+    padding: 8px 20px; 
+    border-radius: 8px; 
+    background: #2563eb; 
+    color: #fff; 
+    border: none; 
+    font-size: 13px; 
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .pg-reset-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+  }
+
+  .pg-reset-btn:active {
+    transform: translateY(0);
   }
 }
 
 @layer utilities {
-  /* Nama class tetap, tapi warna pink di tengah gradient diganti hijau */
+  /* ========== GRADIENT TEXT ========== */
   .text-cmyk-gradient {
-    background-image: linear-gradient(90deg, #00c2d1 0%, #22c55e 50%, #ffd400 100%);
+    background: linear-gradient(
+      90deg,
+      var(--color-cyan) 0%,
+      var(--color-green) 50%,
+      var(--color-yellow) 100%
+    );
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    display: inline-block;
   }
 
+  /* ========== DOT GRID ========== */
   .dot-grid {
-    /* 4. Gunakan variabel untuk radial-gradient */
+    --dot-color: color-mix(in srgb, var(--text-primary) calc(var(--dot-opacity) * 100), transparent);
     background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
     background-size: 18px 18px;
   }
 
+  /* ========== CROP MARKS ========== */
   .crop-marks {
     position: relative;
+    isolation: isolate;
   }
-  
+
   .crop-marks::before,
   .crop-marks::after {
     content: "";
@@ -69,28 +472,29 @@
     width: 14px;
     height: 14px;
     pointer-events: none;
+    opacity: 0.55;
   }
-  
+
   .crop-marks::before {
     top: -7px;
     left: -7px;
     border-top: 1.5px solid currentColor;
     border-left: 1.5px solid currentColor;
-    opacity: 0.55;
   }
-  
+
   .crop-marks::after {
     bottom: -7px;
     right: -7px;
     border-bottom: 1.5px solid currentColor;
     border-right: 1.5px solid currentColor;
-    opacity: 0.55;
   }
 
+  /* ========== NOISE OVERLAY ========== */
   .noise-overlay {
     position: relative;
+    overflow: hidden;
   }
-  
+
   .noise-overlay::after {
     content: "";
     position: absolute;
@@ -100,25 +504,76 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  /* Aksesibilitas: Mematikan animasi bagi pengguna yang sensitif terhadap pergerakan layar */
+  /* ========== RESPONSIVE GRID ========== */
+  .pg-grid-responsive {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--grid-gap);
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 1rem;
+    align-items: start;
+  }
+
+  /* ========== NAVIGATION BUTTON ========== */
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem 1.25rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    transition: all var(--transition-base);
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  .nav-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-btn:active {
+    transform: translateY(0);
+  }
+
+  /* ========== REDUCED MOTION ========== */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
     *::after {
-      animation-duration: 0.001ms !important;
+      animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
-      transition-duration: 0.001ms !important;
+      transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+
+    .nav-btn:hover,
+    .pg-card:hover,
+    .pg-reset-btn:hover {
+      transform: none;
+      box-shadow: none;
+    }
   }
-  :root {
-  --ink: #ffffff; /* Warna terang untuk mode light */
-  --paper: #0b0c10; /* Warna gelap untuk teks di mode light */
-}
 
-.dark {
-  --ink: #0b0c10; /* Warna gelap untuk mode dark */
-  --paper: #ffffff; /* Warna terang untuk teks di mode dark */
-}
-}
+  /* ========== PRINT STYLES ========== */
+  @media print {
+    .noise-overlay::after,
+    .dot-grid,
+    .pg-topbar {
+      display: none;
+    }
 
+    body {
+      background: white !important;
+      color: black !important;
+    }
+
+    .pg-card {
+      break-inside: avoid;
+      box-shadow: none !important;
+    }
+  }
+}

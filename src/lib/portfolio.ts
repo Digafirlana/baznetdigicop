@@ -1,104 +1,96 @@
-export type PortfolioItem = {
+// lib/portfolio.ts
 
-  title: string;
-  category: "Dokumen" | "Banner" | "Kartu Nama" | "Stiker" | "Undangan" | "Menu";
-  image: string;
+export interface PortofolioItem {
+  id: string;
+  nama: string;
+  kategori: string;
   note: string;
+  gambar: string;
+}
+
+const SPREADSHEET_ID = "1SIXNntmWUXvVIm2nibYZX4d_JUP-WbA8rL-cYkVjQ14";
+const SHEET_NAME = "daftar harga";
+
+// Gambar lokal per produk — sesuaikan path dengan file di folder public/
+const GAMBAR_MAP: Record<string, string> = {
+  "Cetak Buku": "/foto/cetak-buku.jpg",
+  "Cetak Poster": "/foto/cetak-poster.jpg",
+  "Cetak Undangan": "/foto/cetak-undangan.jpg",
+  "Cutting Cutter": "/foto/cutting.jpg",
+  "ATK (Alat Tulis Kantor)": "/foto/atk.jpg",
+  "Desain Grafis": "/foto/desain.jpg",
+  "Pengetikan": "/foto/pengetikan.jpg",
+  "Jilid Hardcover": "/jilid.jpg",
+  "Jilid Softcover (Lem Panas)": "/jilid-lem-panas.jpg",
+  "Fotocopy": "/foto/fotocopy.jpg",
+  "Print Dokumen": "/foto/print.jpg",
+  "Laminating": "/foto/laminating.jpg",
+  "Burning CD/DVD": "/foto/burning.jpg",
+  "Buku Yasin": "/foto/buku-yasin.jpg",
 };
 
-export const PORTFOLIO: PortfolioItem[] = [
-  {
-    id: "dokumen-1",
-    title: "Laporan Tahunan — CV Mitra Jaya",
-    category: "Dokumen",
-    image: "/portfolio/dokumen-1.svg",
-    note: "120 hlm, jilid lakban, cover art carton.",
-  },
-  {
-    id: "buku-1",
-    title: "Buku Panduan Operasional",
-    category: "Dokumen",
-    image: "/portfolio/buku-1.svg",
-    note: "Spiral kawat, cover mika bening.",
-  },
-  {
-    id: "dokumen-2",
-    title: "Proposal Bisnis — Startup Lokal",
-    category: "Dokumen",
-    image: "/portfolio/dokumen-2.svg",
-    note: "Cetak warna, jilid soft cover.",
-  },
-  {
-    id: "banner-1",
-    title: "Banner Grand Opening — Resto Nusantara",
-    category: "Banner",
-    image: "/portfolio/banner-1.svg",
-    note: "3x1,5 m, flexi outdoor, mata ayam tiap 50cm.",
-  },
-  {
-    id: "banner-2",
-    title: "Banner Promo — Diskon 50%",
-    category: "Banner",
-    image: "/portfolio/banner-2.svg",
-    note: "2x1 m, indoor, finishing lipat tepi.",
-  },
-  {
-    id: "kartu-1",
-    title: "Kartu Nama — Studio Kreatif",
-    category: "Kartu Nama",
-    image: "/portfolio/kartu-1.svg",
-    note: "Art carton 260gsm, laminasi doff.",
-  },
-  {
-    id: "kartu-2",
-    title: "Kartu Nama — Biro Arsitek",
-    category: "Kartu Nama",
-    image: "/portfolio/kartu-2.svg",
-    note: "Glossy, sudut potong rounded.",
-  },
-  {
-    id: "stiker-1",
-    title: "Label Produk — Kopi Nusantara",
-    category: "Stiker",
-    image: "/portfolio/stiker-1.svg",
-    note: "Vinyl kiss-cut, bentuk lingkaran custom.",
-  },
-  {
-    id: "stiker-2",
-    title: "Stiker Logo — Batch Custom",
-    category: "Stiker",
-    image: "/portfolio/stiker-2.svg",
-    note: "A3, vinyl outdoor tahan air.",
-  },
-  {
-    id: "undangan-1",
-    title: "Undangan Pernikahan — A & B",
-    category: "Undangan",
-    image: "/portfolio/undangan-1.svg",
-    note: "Art paper 190gsm, foil emas.",
-  },
-  {
-    id: "undangan-2",
-    title: "Undangan Ulang Tahun Anak",
-    category: "Undangan",
-    image: "/portfolio/undangan-2.svg",
-    note: "Cetak dupleks, bentuk custom die-cut.",
-  },
-  {
-    id: "menu-1",
-    title: "Menu Kafe — Edisi Musim",
-    category: "Menu",
-    image: "/portfolio/menu-1.svg",
-    note: "Laminasi glossy, tahan air & noda.",
-  },
-];
+function getGambar(nama: string): string {
+  return GAMBAR_MAP[nama] ?? "";
+}
 
-export const CATEGORIES = [
-  "Semua",
-  "Dokumen",
-  "Banner",
-  "Kartu Nama",
-  "Stiker",
-  "Undangan",
-  "Menu",
-] as const;
+function parseRow(row: (string | null)[], index: number): PortofolioItem | null {
+  const nama = row[1]?.trim() ?? "";
+  if (!nama || nama.toLowerCase() === "title") return null;
+
+  return {
+    id: `item-${index}`,
+    note: row[0]?.trim() ?? "",
+    nama,
+    kategori: row[2]?.trim() || "Umum",
+    // Pakai gambar dari spreadsheet jika ada, fallback ke GAMBAR_MAP
+    gambar: row[3]?.trim() || getGambar(nama),
+  };
+}
+
+export async function fetchPortofolio(): Promise<PortofolioItem[]> {
+  try {
+    const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) throw new Error(`Fetch gagal: ${res.status}`);
+
+    const text = await res.text();
+    const jsonString = text.replace(/^[^\(]+\(/, "").replace(/\);?\s*$/, "");
+    const json = JSON.parse(jsonString);
+
+    const rows: (string | null)[][] = json.table.rows.map(
+      (row: { c: ({ v: string | null } | null)[] }) =>
+        row.c.map((cell) => (cell?.v != null ? String(cell.v) : null))
+    );
+
+    const items = rows
+      .map((row, i) => parseRow(row, i))
+      .filter((item): item is PortofolioItem => item !== null);
+
+    return items.length > 0 ? items : DUMMY_DATA;
+  } catch (error) {
+    console.error("Gagal fetch spreadsheet:", error);
+    return DUMMY_DATA;
+  }
+}
+
+export function getKategori(items: PortofolioItem[]): string[] {
+  const set = new Set(items.map((i) => i.kategori));
+  return ["Semua", ...Array.from(set).sort()];
+}
+
+export const DUMMY_DATA: PortofolioItem[] = [
+  { id: "d1", nama: "Cetak Buku", kategori: "Cetak", note: "hubungi nomer cs", gambar: getGambar("Cetak Buku") },
+  { id: "d2", nama: "Cetak Poster", kategori: "Cetak", note: "hubungi nomer cs", gambar: getGambar("Cetak Poster") },
+  { id: "d3", nama: "Cetak Undangan", kategori: "Cetak", note: "hubungi nomer cs", gambar: getGambar("Cetak Undangan") },
+  { id: "d4", nama: "Cutting Cutter", kategori: "Finishing", note: "hubungi nomer cs", gambar: getGambar("Cutting Cutter") },
+  { id: "d5", nama: "ATK (Alat Tulis Kantor)", kategori: "ATK", note: "hubungi nomer cs", gambar: getGambar("ATK (Alat Tulis Kantor)") },
+  { id: "d6", nama: "Desain Grafis", kategori: "Desain", note: "hubungi nomer cs", gambar: getGambar("Desain Grafis") },
+  { id: "d7", nama: "Pengetikan", kategori: "Desain", note: "hubungi nomer cs", gambar: getGambar("Pengetikan") },
+  { id: "d8", nama: "Jilid Hardcover", kategori: "Jilid", note: "hubungi nomer cs", gambar: getGambar("Jilid Hardcover") },
+  { id: "d9", nama: "Jilid Softcover (Lem Panas)", kategori: "Jilid", note: "hubungi nomer cs", gambar: getGambar("Jilid Softcover (Lem Panas)") },
+  { id: "d10", nama: "Fotocopy", kategori: "Cetak", note: "hubungi nomer cs", gambar: getGambar("Fotocopy") },
+  { id: "d11", nama: "Print Dokumen", kategori: "Cetak", note: "hubungi nomer cs", gambar: getGambar("Print Dokumen") },
+  { id: "d12", nama: "Laminating", kategori: "Finishing", note: "hubungi nomer cs", gambar: getGambar("Laminating") },
+  { id: "d13", nama: "Burning CD/DVD", kategori: "Lainnya", note: "hubungi nomer cs", gambar: getGambar("Burning CD/DVD") },
+  { id: "d14", nama: "Buku Yasin", kategori: "Cetak", note: "hubungi nomer cs", gambar: getGambar("Buku Yasin") },
+];

@@ -13,8 +13,8 @@ function emptyLine(product: PrintProduct): CartLine {
 }
 
 const BRANCHES = [
-  { id: "Outlet", name: "Cabang 1 - Lowokwaru", address: "Jl. Bunga Kumis Kucing No.21 Blok A", phone: "628988075928" },
-  { id: "cabang2", name: "Cabang 2 - Lowokwaru", address: "Jl. Pisang Kipas", phone: "6285792079661" },
+  { id: "Outlet", name: "Outlet 1 - Lowokwaru", address: "Jl. Bunga Kumis Kucing No.21 Blok A", phone: "628988075928" },
+  { id: "cabang2", name: "Outlet 2 - Lowokwaru", address: "Jl. Pisang Kipas", phone: "6285792079661" },
 ] as const;
 
 export default function PriceCalculator() {

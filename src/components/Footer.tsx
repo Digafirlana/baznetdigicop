@@ -12,9 +12,7 @@ export default function Footer() {
             <span className="font-display text-lg font-semibold text-ink dark:text-paper">
               Baznet<span className="animate-gradient bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent">Digicop</span>
             </span>
-            <p className="mt-3 max-w-xs font-body text-sm leading-relaxed text-ink/60 dark:text-paper/55">
-              Percetakan digital & offset untuk dokumen, banner, kartu nama, dan kebutuhan cetak bisnis. Warna akurat, hasil presisi, proses cepat.
-            </p>
+          
           </div>
 
           {/* Bagian Navigasi */}
@@ -24,8 +22,8 @@ export default function Footer() {
             </p>
             <ul className="mt-4 space-y-2.5 font-body text-sm text-ink/70 dark:text-paper/70">
               <li><Link href="/" className="hover:text-cyan transition-colors">Beranda</Link></li>
-              <li><Link href="/tentang" className="hover:text-cyan transition-colors">Tentang</Link></li>
-              <li><Link href="/dokumentasi" className="hover:text-cyan transition-colors">Dokumentasi</Link></li>
+              <li><Link href="/Outlet" className="hover:text-cyan transition-colors">Outlet</Link></li>
+              <li><Link href="/daftarproduk" className="hover:text-cyan transition-colors">Daftar Jasa & Produk</Link></li>
             </ul>
           </div>
 

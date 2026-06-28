@@ -4,7 +4,6 @@ import React from "react";
 import { motion } from "framer-motion";
 
 const REVIEWS = [
-  // ... data reviews tetap sama
   { name: "Hanafah", rating: 5, text: "super lengkap banget! sering ngeprint disini dan super cepat, mas-masnya ramah dan membantu banget🥳", date: "5 bulan lalu" },
   { name: "Muhammad Raja Hamonangan Pasaribu", rating: 5, text: "Udah langganan. Bisa pesen melalui WA, jadi kesana tinggal ambil aja.. lalu bisa bawa kertas sendiri jugaaaaaa", date: "5 bulan lalu" },
   { name: "Mita Sania Qurrota Ayunin", rating: 5, text: "Mas nya sat set ngeprintnya, terus cetakannya bagus banget, jilid tanpa ada yang cacat, terus mas nya fast respon kalau di chat. Toko cetakan paling sip ndak mantap", date: "5 bulan lalu" },
@@ -22,7 +21,7 @@ const ratingMap = { 5: "★★★★★", 4: "★★★★☆", 3: "★★★☆
 
 export default function ReviewsMarquee() {
   return (
-    <section className="mx-auto max-w-full overflow-hidden py-20 sm:py-28 bg-paper dark:bg-ink transition-colors duration-300">
+    <section className="mx-auto max-w-full overflow-hidden py-20 sm:py-28 bg-white dark:bg-[#121117] transition-colors duration-300">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -31,7 +30,8 @@ export default function ReviewsMarquee() {
         viewport={{ once: true }}
         className="mx-auto max-w-6xl px-5 sm:px-8"
       >
-        <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl text-ink dark:text-paper transition-colors duration-300">
+        {/* FONT & WARNA HEADER DISESUAIKAN */}
+        <h2 className="font-sans text-3xl font-extrabold tracking-tight sm:text-4xl text-[#212529] dark:text-white transition-colors duration-300">
           Apa kata pelanggan kami.
         </h2>
       </motion.div>
@@ -44,7 +44,7 @@ export default function ReviewsMarquee() {
         viewport={{ once: true }}
         className="group relative mt-12 flex w-full overflow-hidden"
       >
-        {/* List (Gunakan fungsi untuk menghindari repetisi kode) */}
+        {/* List */}
         {[1, 2].map((listIndex) => (
           <div
             key={listIndex}
@@ -54,22 +54,24 @@ export default function ReviewsMarquee() {
             {REVIEWS.map((r, index) => (
               <div
                 key={`review-${listIndex}-${index}`}
-                className="w-[320px] shrink-0 rounded-2xl border border-ink/10 dark:border-paper/15 bg-white dark:bg-ink-card p-6 transition-all hover:-translate-y-1 sm:w-[400px]"
+                className="w-[320px] shrink-0 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#1A1921] p-6 transition-all hover:-translate-y-1 sm:w-[400px]"
               >
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="font-display text-lg font-semibold text-ink dark:text-paper">
+                    {/* FONT NAMA DISESUAIKAN */}
+                    <h3 className="font-sans text-lg font-extrabold text-[#212529] dark:text-white">
                       {r.name}
                     </h3>
-                    <div className="mt-1 font-mono text-sm text-yellow-dim dark:text-yellow">
+                    <div className="mt-1 font-mono text-sm text-yellow-500 dark:text-yellow-400">
                       {ratingMap[r.rating as keyof typeof ratingMap]}
                     </div>
                   </div>
-                  <span className="ml-4 whitespace-nowrap font-mono text-[11px] text-ink/40 dark:text-paper/40">
+                  <span className="ml-4 whitespace-nowrap font-mono text-[11px] text-gray-400 dark:text-gray-500">
                     {r.date}
                   </span>
                 </div>
-                <p className="mt-3 font-body text-sm leading-relaxed text-ink/70 dark:text-paper/65">
+                {/* FONT REVIEW DISESUAIKAN */}
+                <p className="mt-3 font-sans text-sm leading-relaxed text-gray-600 dark:text-gray-400">
                   "{r.text}"
                 </p>
               </div>

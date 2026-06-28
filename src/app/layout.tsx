@@ -44,8 +44,9 @@ export default function RootLayout({
     // 2. Tambahkan suppressHydrationWarning di tag <html>
     <html lang="id" suppressHydrationWarning>
       <body
-        className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} font-body bg-ink text-paper antialiased transition-colors duration-300`}
-      >
+      
+  className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} font-body bg-paper text-ink dark:bg-ink dark:text-paper antialiased transition-colors duration-300`}
+>
         {/* 3. Bungkus semua komponen UI dengan Providers */}
         <Providers>
           <Navbar />
