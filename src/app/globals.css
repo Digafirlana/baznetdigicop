@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* 1. Definisikan Variabel untuk Mode Terang (Default) */
+  :root {
+    --bg-color: #f5f3ec; /* Background warna kertas/terang */
+    --text-color: #0a0a0f; /* Teks warna gelap */
+    --dot-color: rgba(10, 10, 15, 0.12); /* Dot grid warna gelap agar terlihat di bg terang */
+    --selection-bg: #22c55e;
+    --selection-text: #0a0a0f;
+  }
+
+  /* 2. Definisikan Variabel untuk Mode Gelap (Ketika class .dark aktif) */
+  .dark {
+    --bg-color: #0a0a0f; /* Background warna gelap (Ink) */
+    --text-color: #f5f3ec; /* Teks warna terang (Paper) */
+    --dot-color: rgba(245, 243, 236, 0.12); /* Dot grid warna terang agar terlihat di bg gelap */
+  }
+
+  ::selection {
+    /* Mengganti background highlight text dari pink ke hijau */
+    background-color: var(--selection-bg);
+    color: var(--selection-text);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    /* 3. Gunakan variabel di elemen body */
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    /* Tambahkan transisi agar perpindahan mode tidak kasar */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  :focus-visible {
+    outline: 2px solid #ffd400;
+    outline-offset: 3px;
+  }
+}
+
+@layer utilities {
+  /* Nama class tetap, tapi warna pink di tengah gradient diganti hijau */
+  .text-cmyk-gradient {
+    background-image: linear-gradient(90deg, #00c2d1 0%, #22c55e 50%, #ffd400 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .dot-grid {
+    /* 4. Gunakan variabel untuk radial-gradient */
+    background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+
+  .crop-marks {
+    position: relative;
+  }
+  
+  .crop-marks::before,
+  .crop-marks::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    pointer-events: none;
+  }
+  
+  .crop-marks::before {
+    top: -7px;
+    left: -7px;
+    border-top: 1.5px solid currentColor;
+    border-left: 1.5px solid currentColor;
+    opacity: 0.55;
+  }
+  
+  .crop-marks::after {
+    bottom: -7px;
+    right: -7px;
+    border-bottom: 1.5px solid currentColor;
+    border-right: 1.5px solid currentColor;
+    opacity: 0.55;
+  }
+
+  .noise-overlay {
+    position: relative;
+  }
+  
+  .noise-overlay::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Aksesibilitas: Mematikan animasi bagi pengguna yang sensitif terhadap pergerakan layar */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  :root {
+  --ink: #ffffff; /* Warna terang untuk mode light */
+  --paper: #0b0c10; /* Warna gelap untuk teks di mode light */
+}
+
+.dark {
+  --ink: #0b0c10; /* Warna gelap untuk mode dark */
+  --paper: #ffffff; /* Warna terang untuk teks di mode dark */
+}
+}
+

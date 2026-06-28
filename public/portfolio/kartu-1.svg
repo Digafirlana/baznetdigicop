@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <radialGradient id="gkartu1" cx="30%" cy="20%" r="80%">
+      <stop offset="0%" stop-color="#F5F3EC" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#F5F3EC" stop-opacity="0.85"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#gkartu1)"/>
+  <circle cx="40" cy="40" r="55" fill="#0A0A0F" opacity="0.08"/>
+  <circle cx="370" cy="270" r="70" fill="#0A0A0F" opacity="0.06"/>
+  <g transform="translate(40,8)">
+    <line x1="0" y1="0" x2="14" y2="0" stroke="#0A0A0F" stroke-width="1.5" opacity="0.5"/>
+    <line x1="0" y1="0" x2="0" y2="14" stroke="#0A0A0F" stroke-width="1.5" opacity="0.5"/>
+  </g>
+  <g transform="translate(360,292)">
+    <line x1="0" y1="0" x2="-14" y2="0" stroke="#0A0A0F" stroke-width="1.5" opacity="0.5"/>
+    <line x1="0" y1="0" x2="0" y2="-14" stroke="#0A0A0F" stroke-width="1.5" opacity="0.5"/>
+  </g>
+  <text x="40" y="150" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#0A0A0F" letter-spacing="-0.5">
+    <tspan x="40" dy="0">STUDIO</tspan><tspan x="40" dy="40">KREATIF</tspan>
+  </text>
+  <text x="40" y="265" font-family="monospace" font-size="12" fill="#0A0A0F" opacity="0.55" letter-spacing="2">KARTU NAMA</text>
+</svg>
