@@ -10,7 +10,7 @@ export default function Footer() {
           {/* Bagian Logo & Deskripsi */}
           <div className="md:col-span-2">
             <span className="font-display text-lg font-semibold text-ink dark:text-paper">
-              Baznet<span className="animate-gradient bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent">Digicop</span>
+              Baznet<span className="animate-gradient bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent">Digicorp</span>
             </span>
           
           </div>

@@ -1,89 +1,78 @@
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Outlet - Baznet Print",
-  description: "Profil, visi misi, dan keunggulan Baznet Print.",
-};
-
-const VALUES = [
-  { code: "1", title: "Akurasi warna", desc: "Setiap mesin cetak kami dikalibrasi rutin supaya warna di layar dan di kertas tidak meleset jauh." },
-  { code: "2", title: "Tepat waktu", desc: "Estimasi selesai yang kami berikan di awal adalah komitmen, bukan perkiraan kasar." },
-  { code: "3", title: "Transparan harga", desc: "Tidak ada biaya tersembunyi. Apa yang dihitung di kalkulator, itu yang Anda bayar." },
-  { code: "4", title: "Detail finishing", desc: "Potongan presisi, laminasi rapi, jilid kuat — bagian kecil yang menentukan kesan akhir." },
+// Data lokasi
+const LOCATIONS = [
+  {
+    image: '/lokasi-1.png',
+    label: 'Jl. Bunga Kumis Kucing No.21 Blok A, Jatimulyo, Kec. Lowokwaru, Kota Malang, Jawa Timur 65141',
+    title: 'Outlet 1',
+ 
+    alt: 'Lokasi toko Baznet Print tampak dalam'
+  },
+  {
+    image: '/lokasi-2.png',
+    label: 'Jl. Pisang Kipas, Jatimulyo, Kec. Lowokwaru, Kota Malang, Jawa Timur 65141',
+    title: 'Outlet 2',
+   
+    alt: 'Lokasi area produksi Baznet Print'
+  },
+  {
+    image: '/lokasi-3.png',
+    label: 'Jl. Raya Sekarpuro, Sekaran, Sekarpuro, Kec. Pakis, Kabupaten Malang, Jawa Timur 65154',
+    title: 'Outlet 3',
+    alt: 'Lokasi area produksi Baznet Print'
+  }
 ];
 
-export default function TentangPage() {
+// Kartu lokasi bergaya label pengiriman / tiket cetak
+function LocationCard({ image, label, title, code, alt }) {
   return (
-    // Gunakan bg-paper (light) dan dark:bg-ink (dark)
-    <main className="bg-paper text-ink dark:bg-ink dark:text-paper transition-colors duration-300">
-      
-      {/* SECTION HERO */}
-      <section className="noise-overlay relative overflow-hidden border-b border-gray-200 dark:border-ink-line">
-        <div className="dot-grid pointer-events-none absolute inset-0 opacity-10 dark:opacity-30" />
+    <div className="relative rounded-sm bg-[#FBF9F3] shadow-[0_1px_0_rgba(0,0,0,0.04)] ring-1 ring-black/10 dark:bg-[#161420] dark:ring-white/10">
+      {/* lubang perforasi ala label cetak */}
+      <div className="absolute -left-[5px] top-6 h-[10px] w-[10px] rounded-full bg-white ring-1 ring-black/10 dark:bg-[#0B0A10] dark:ring-white/10" />
+      <div className="absolute -right-[5px] top-6 h-[10px] w-[10px] rounded-full bg-white ring-1 ring-black/10 dark:bg-[#0B0A10] dark:ring-white/10" />
+
+      <div className="relative overflow-hidden border-b border-dashed border-black/15 dark:border-white/15">
+        <img
+          src={image}
+          alt={alt}
+          className="h-52 w-full object-cover grayscale-[15%] transition-all duration-300 hover:grayscale-0 sm:h-60"
+          loading="lazy"
+        />
+      </div>
+
+      <div className="px-5 py-5">
+        <div className="flex items-baseline justify-between gap-3 border-b border-black/10 pb-3 dark:border-white/10">
+          <h3 className="text-lg font-semibold text-[#1A1A1A] dark:text-white">
+            {title}
+          </h3>
+          <span className="text-[11px] tracking-widest text-[#00833D] dark:text-[#7FE6AD]">
+            {code}
+          </span>
+        </div>
+        <p className="mt-3 text-[13px] leading-relaxed text-gray-600 dark:text-gray-400">
+          {label}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// Komponen Utama
+export default function LokasiPage() {
+  return (
+    <main className="bg-[#F4F1EA] text-gray-900 transition-colors duration-300 dark:bg-[#0B0A10] dark:text-white">
+      <section className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
         
-        <div className="relative mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-24 lg:flex lg:items-center lg:justify-between gap-12">
-          <div className="z-10 lg:w-1/2">
-            <p className="font-mono text-xs uppercase tracking-widest text-ink/40 dark:text-paper/40">
-              Tentang Baznet Print
-            </p>
-            <h1 className="mt-4 max-w-2xl font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-              Percetakan keluarga yang tumbuh bersama pelanggan
-            </h1>
-            <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-ink/60 dark:text-paper/60">
-              Kami percaya hasil cetak yang baik dimulai dari komunikasi yang jelas: 
-              file yang tepat, proof yang disetujui, dan tenggat yang dihormati. Sejak 2016, itulah yang kami jaga.
-            </p>
-          </div>
+        <h2 className="mt-4 text-4xl font-semibold tracking-tight text-[#1A1A1A] sm:text-5xl dark:text-white">
+          Tiga titik outlet
+        </h2>
+        <p className="mt-4 max-w-xl text-gray-600 dark:text-gray-400">
+          Dari pemesanan di toko sampai hasil cetak besar, ini alamat lengkap setiap titik Baznet Print yang bisa kamu datangi langsung.
+        </p>
 
-          <div className="relative mt-12 flex justify-center lg:mt-0 lg:w-1/2 lg:justify-end">
-            <div className="relative w-full max-w-sm xl:max-w-md">
-              <img src="9.png" alt="Maskot 3D Baznet Print" className="h-auto w-full object-contain drop-shadow-3xl" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION VISI MISI */}
-      <section className="mx-auto grid max-w-6xl gap-10 px-5 py-16 sm:px-8 sm:py-20 md:grid-cols-2 md:gap-16">
-        <div>
-          <p className="font-mono text-xs uppercase tracking-widest text-cyan">Visi</p>
-          <p className="mt-3 font-display text-xl font-medium leading-snug sm:text-2xl">
-            Jadi mitra cetak yang paling dipercaya pelaku usaha kecil di Malang Raya dan sekitarnya.
-          </p>
-        </div>
-        <div>
-          <p className="font-mono text-xs uppercase tracking-widest text-magenta">Misi</p>
-          <ul className="mt-3 space-y-2.5 font-body text-sm leading-relaxed text-ink/70 dark:text-paper/65 sm:text-base">
-            <li>1. Menjaga akurasi warna di setiap hasil cetak.</li>
-            <li>2. Memberi estimasi harga yang jujur sejak awal.</li>
-            <li>3. Menyelesaikan pesanan sesuai waktu yang dijanjikan.</li>
-            <li>4. Mendukung pertumbuhan UMKM lewat harga bersahabat.</li>
-          </ul>
-        </div>
-      </section>
-
-      {/* SECTION PRINSIP */}
-      <section className="border-y border-gray-200 dark:border-ink-line bg-gray-50 dark:bg-ink-surface">
-        <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
-          <p className="font-mono text-xs uppercase tracking-widest text-ink/40 dark:text-paper/40">
-            Yang kami pegang teguh
-          </p>
-          <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-            Empat prinsip, seperti empat plat warna.
-          </h2>
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {VALUES.map((v) => (
-              <div key={v.title} className="crop-marks rounded-2xl border border-gray-200 dark:border-ink-line bg-white dark:bg-ink-card p-6 transition-colors">
-                <span className="font-display text-2xl font-bold text-ink/20 dark:text-paper/25">
-                  {v.code}
-                </span>
-                <h3 className="mt-4 font-display text-lg font-semibold">{v.title}</h3>
-                <p className="mt-2 font-body text-sm leading-relaxed text-ink/60 dark:text-paper/55">
-                  {v.desc}
-                </p>
-              </div>
-            ))}
-          </div>
+        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {LOCATIONS.map((loc) => (
+            <LocationCard key={loc.code} {...loc} />
+          ))}
         </div>
       </section>
     </main>

@@ -13,20 +13,20 @@ const SHEET_NAME = "daftar harga";
 
 // Gambar lokal per produk — sesuaikan path dengan file di folder public/
 const GAMBAR_MAP: Record<string, string> = {
-  "Cetak Buku": "/foto/cetak-buku.jpg",
+  "Cetak Buku": "/foto/desain.png",
   "Cetak Poster": "/foto/cetak-poster.jpg",
-  "Cetak Undangan": "/foto/cetak-undangan.jpg",
-  "Cutting Cutter": "/foto/cutting.jpg",
-  "ATK (Alat Tulis Kantor)": "/foto/atk.jpg",
+  "Cetak Undangan": "/foto/cetak-undangan.jpeg",
+  "Cutting Cutter": "/foto/cutting.jpeg",
+  "ATK (Alat Tulis Kantor)": "/foto/ATK.jpeg",
   "Desain Grafis": "/foto/desain.jpg",
-  "Pengetikan": "/foto/pengetikan.jpg",
+  "Pengetikan": "/foto/pengetikan.jpeg",
   "Jilid Hardcover": "/jilid.jpg",
   "Jilid Softcover (Lem Panas)": "/jilid-lem-panas.jpg",
-  "Fotocopy": "/foto/fotocopy.jpg",
-  "Print Dokumen": "/foto/print.jpg",
+  "Fotocopy": "/foto/fotocopy.jpeg",
+  "Print Dokumen": "/foto/print-dokumen.jpeg",
   "Laminating": "/foto/laminating.jpg",
-  "Burning CD/DVD": "/foto/burning.jpg",
-  "Buku Yasin": "/foto/buku-yasin.jpg",
+  "Burning CD/DVD": "/foto/burning.jpeg",
+  "Buku Yasin": "/foto/buku-yasin.jpeg",
 };
 
 function getGambar(nama: string): string {

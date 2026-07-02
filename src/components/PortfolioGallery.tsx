@@ -42,7 +42,7 @@ function ProductCard({ item, query }: { item: PortofolioItem; query: string }) {
         <p className="pg-card-note">{item.note || "Hubungi CS untuk harga"}</p>
         
         <a 
-          href={`https://wa.me/628988075928?text=Halo Baznet%2C%20%20berapa%20harga%20${encodeURIComponent(item.nama)}`} 
+          href={`https://wa.me/6285792079661?text=Halo Baznet%2C%20%20berapa%20harga%20${encodeURIComponent(item.nama)}`} 
           target="_blank" 
           rel="noopener noreferrer" 
           className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-br from-[#25D366] to-[#128C7E] text-white rounded-xl font-semibold text-sm hover:from-[#128C7E] hover:to-[#075E54] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-green-500/40 transition-all duration-300 mt-auto"

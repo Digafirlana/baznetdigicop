@@ -37,20 +37,16 @@ export default function Navbar() {
 
             alt="Logo Baznet Digicop" 
 
-            width={70} 
+            width={60} 
 
-            height={70} 
+            height={60} 
 
             className="object-contain transition-transform duration-300 group-hover:scale-105"
 
           />
-
-          <span className="font-display text-lg font-semibold tracking-tight text-gray-900 dark:text-gray-100 transition-colors duration-300">
-
-            Baznet<span className="bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent">Digicop</span>
-
-          </span>
-
+<span className="font-display text-sm font-semibold tracking-tight text-gray-900 dark:text-gray-100 transition-colors duration-300">
+  Baznet<span className="bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent">Digicorp</span>
+</span>
         </Link>
         {/* Desktop navigation */}
         <nav className="hidden items-center gap-1 md:flex">

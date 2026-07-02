@@ -13,8 +13,9 @@ function emptyLine(product: PrintProduct): CartLine {
 }
 
 const BRANCHES = [
-  { id: "Outlet", name: "Outlet 1 - Lowokwaru", address: "Jl. Bunga Kumis Kucing No.21 Blok A", phone: "628988075928" },
-  { id: "cabang2", name: "Outlet 2 - Lowokwaru", address: "Jl. Pisang Kipas", phone: "6285792079661" },
+  { id: "Outlet1", name: "Outlet 1 -Jl. Bunga Kumis Kucing No.21 Blok A", phone: "628988075928" },
+  { id: "Outlet2", name: "Outlet 2 - Jl. Pisang Kipas", phone: "6285792079661" },
+  { id: "Outlet3", name: "Outlet 3 - Jl. Raya Sekarpuro, Kab. Malang", phone: "62881036669464" },
 ] as const;
 
 export default function PriceCalculator() {
@@ -62,13 +63,13 @@ export default function PriceCalculator() {
     <div className="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-300 p-6 md:p-12">
       {/* Toggle Dark Mode */}
       <div className="mx-auto max-w-5xl mb-6 flex justify-end">
-      
+       
       </div>
 
       <div className="mx-auto max-w-5xl">
         {/* Header */}
         <div className="mb-10">
-          <p className="font-mono text-xs uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">
+          <p className="font-sans text-xs uppercase tracking-wide text-gray-400 dark:text-gray-500 mb-2">
             Pesanan
           </p>
           <h2 className="text-3xl font-bold">
@@ -94,7 +95,7 @@ export default function PriceCalculator() {
                 )}
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label>
-                    <span className="font-mono text-[11px] uppercase text-gray-500 dark:text-gray-400">
+                    <span className="font-sans text-[11px] uppercase text-gray-500 dark:text-gray-400">
                       Barang
                     </span>
                     <select
@@ -110,7 +111,7 @@ export default function PriceCalculator() {
                     </select>
                   </label>
                   <label>
-                    <span className="font-mono text-[11px] uppercase text-gray-500 dark:text-gray-400">
+                    <span className="font-sans text-[11px] uppercase text-gray-500 dark:text-gray-400">
                       Jumlah ({productMap.get(line.productId)?.unit || "lembar"})
                     </span>
                     <input
@@ -133,7 +134,7 @@ export default function PriceCalculator() {
 
           {/* Ringkasan – tanpa harga */}
           <div className="sticky top-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-7 shadow-sm transition-colors">
-            <p className="font-mono text-xs uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-5">
+            <p className="font-sans text-xs uppercase tracking-wide text-gray-400 dark:text-gray-500 mb-5">
               Ringkasan Pesanan
             </p>
             <div className="space-y-3">
@@ -146,25 +147,32 @@ export default function PriceCalculator() {
                     <span className="text-gray-600 dark:text-gray-300">
                       {product.name}
                     </span>
-                    <span className="font-mono text-gray-900 dark:text-gray-100">
+                    <span className="font-sans text-gray-900 dark:text-gray-100">
                       x{qty} {product.unit}
                     </span>
                   </div>
                 );
               })}
             </div>
+            
             <div className="mt-6 border-t border-gray-200 dark:border-gray-700 pt-5 space-y-4">
-              <select
-                value={selectedBranch}
-                onChange={(e) => setSelectedBranch(e.target.value)}
-                className="w-full rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 px-3 py-2.5 text-sm text-gray-900 dark:text-gray-100 outline-none"
-              >
-                {BRANCHES.map((b) => (
-                  <option key={b.id} value={b.id}>
-                    {b.name}
-                  </option>
-                ))}
-              </select>
+              {/* Bagian teks "Pilih Outlet" yang ditambahkan */}
+              <label className="block">
+                <span className="font-sans text-[11px] uppercase text-gray-400 dark:text-gray-500 block mb-2">
+                  Pilih Outlet
+                </span>
+                <select
+                  value={selectedBranch}
+                  onChange={(e) => setSelectedBranch(e.target.value)}
+                  className="w-full rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 px-3 py-2.5 text-sm text-gray-900 dark:text-gray-100 outline-none"
+                >
+                  {BRANCHES.map((b) => (
+                    <option key={b.id} value={b.id}>
+                      {b.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
 
               <a
                 href={`https://wa.me/${branch.phone}?text=${csMessage}`}
