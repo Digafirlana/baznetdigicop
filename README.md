@@ -73,3 +73,4 @@ lalu update path gambar di `src/lib/portfolio.ts`.
 - Next.js 14 (App Router) + TypeScript
 - Tailwind CSS
 - Font: Space Grotesk, Inter, JetBrains Mono (via next/font/google)
+# Baznet-Digicorp
