@@ -36,20 +36,18 @@ const OUTLETS = [
   },
 ];
 
-// Interface props khusus untuk kartu lokasi
 interface LocationCardProps {
   image: string;
   label: string;
   title: string;
   code: string;
   alt: string;
-  link?: string | null; // opsional
+  link?: string | null;
 }
 
 function LocationCard({ image, label, title, code, alt, link }: LocationCardProps) {
   const content = (
     <div className="relative rounded-sm bg-[#FBF9F3] shadow-[0_1px_0_rgba(0,0,0,0.04)] ring-1 ring-black/10 transition-all duration-300 hover:shadow-md dark:bg-[#161420] dark:ring-white/10">
-      {/* lubang perforasi */}
       <div className="absolute -left-[5px] top-6 h-[10px] w-[10px] rounded-full bg-white ring-1 ring-black/10 dark:bg-[#0B0A10] dark:ring-white/10" />
       <div className="absolute -right-[5px] top-6 h-[10px] w-[10px] rounded-full bg-white ring-1 ring-black/10 dark:bg-[#0B0A10] dark:ring-white/10" />
 
@@ -66,21 +64,14 @@ function LocationCard({ image, label, title, code, alt, link }: LocationCardProp
 
       <div className="px-5 py-5">
         <div className="flex items-baseline justify-between gap-3 border-b border-black/10 pb-3 dark:border-white/10">
-          <h3 className="text-lg font-semibold text-[#1A1A1A] dark:text-white">
-            {title}
-          </h3>
-          <span className="text-[11px] tracking-widest text-[#00833D] dark:text-[#7FE6AD]">
-            {code}
-          </span>
+          <h3 className="text-lg font-semibold text-[#1A1A1A] dark:text-white">{title}</h3>
+          <span className="text-[11px] tracking-widest text-[#00833D] dark:text-[#7FE6AD]">{code}</span>
         </div>
-        <p className="mt-3 text-[13px] leading-relaxed text-gray-600 dark:text-gray-400">
-          {label}
-        </p>
+        <p className="mt-3 text-[13px] leading-relaxed text-gray-600 dark:text-gray-400">{label}</p>
       </div>
     </div>
   );
 
-  // Bungkus dengan <a> jika link tersedia
   if (link) {
     return <a href={link}>{content}</a>;
   }
@@ -95,11 +86,9 @@ export default function LokasiPage() {
           Tiga titik outlet
         </h2>
         <p className="mt-4 max-w-xl text-gray-600 dark:text-gray-400">
-          Dari pemesanan di toko sampai hasil cetak besar, ini alamat lengkap
-          setiap titik Baznet Print yang bisa kamu datangi langsung.
+          Dari pemesanan di toko sampai hasil cetak besar, ini alamat lengkap setiap titik Baznet Print yang bisa kamu datangi langsung.
         </p>
 
-        {/* Grid kartu outlet */}
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {OUTLETS.map((loc) => (
             <LocationCard
@@ -114,15 +103,13 @@ export default function LokasiPage() {
           ))}
         </div>
 
-        {/* Kontak cepat */}
         <div className="mt-20 border-t border-black/10 pt-16 dark:border-white/10">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl font-semibold tracking-tight text-[#1A1A1A] sm:text-4xl dark:text-white">
               Jasa Print, Fotocopy, Jilid & ATK Malang
             </h2>
             <p className="mt-4 text-gray-600 dark:text-gray-400">
-              Melayani area Malang dan sekitarnya. Silakan pilih nomor WhatsApp
-              Customer Service terdekat dari tempat Anda berada.
+              Melayani area Malang dan sekitarnya. Silakan pilih nomor WhatsApp Customer Service terdekat dari tempat Anda berada.
             </p>
           </div>
 
