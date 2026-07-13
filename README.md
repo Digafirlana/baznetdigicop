@@ -75,3 +75,4 @@ lalu update path gambar di `src/lib/portfolio.ts`.
 - Font: Space Grotesk, Inter, JetBrains Mono (via next/font/google)
 # Baznet-Digicorp
 # baznet-digicorp
+# baznet-digicorp
