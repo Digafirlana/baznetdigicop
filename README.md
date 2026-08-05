@@ -77,3 +77,4 @@ lalu update path gambar di `src/lib/portfolio.ts`.
 # baznet-digicorp
 # baznet-digicorp
 # baznet-digicorp
+# baznetdigicop
