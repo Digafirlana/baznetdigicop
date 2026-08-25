@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    // Menggunakan bg-gray-50 (terang) dan dark:bg-ink-surface (gelap)
+  
     <footer className="border-t border-gray-200 dark:border-ink-line bg-gray-50 dark:bg-ink-surface transition-colors duration-300">
       <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8">
         <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-4">
