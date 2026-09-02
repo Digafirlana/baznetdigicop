@@ -4,8 +4,7 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    // Jika gambar berasal dari domain eksternal, tambahkan di sini (opsional)
-    // domains: ['example.com'],
+  
   },
 };
 
