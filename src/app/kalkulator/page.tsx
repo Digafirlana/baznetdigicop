@@ -8,7 +8,6 @@ export const metadata: Metadata = {
 
 export default function KalkulatorPage() {
   return (
-    // BG adaptif: bg-paper (terang), bg-ink (gelap)
     <section className="min-h-screen bg-paper dark:bg-ink px-5 py-14 transition-colors duration-300 sm:px-8 sm:py-20">
       <div className="mx-auto max-w-6xl">
         
